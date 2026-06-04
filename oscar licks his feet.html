@@ -1,0 +1,373 @@
+<head> 
+
+  
+
+</head> 
+    <style>
+
+        section{
+            
+            background-color:gold;
+            color:chartreuse;
+            margin:16px;
+            padding:12px;
+            border-radius: 9px;
+            align-items: center;
+            
+            ;}
+    img {
+        width: 500px;
+        height: 100px;
+    }
+
+
+    tabel{
+
+            background-color:gold;
+            color:chartreuse;
+            margin:16px;
+            padding:12px;
+            border-radius: 9px;
+            align-items: center;
+            
+    }
+    </style>
+
+<script> 
+
+  
+
+    let teams = []; 
+    
+    let stats = {}; 
+    
+      
+    
+    // -------------------- ADD TEAM -------------------- 
+    
+    function addTeam() { 
+    
+      
+    
+        let name = document.getElementById("teamName").value; 
+    
+      
+    
+        if (name === "") return; 
+    
+      
+    
+        teams.push(name); 
+    
+      
+    
+        document.getElementById("teamList").innerHTML += 
+    
+            "<li>" + name + "</li>"; 
+    
+      
+    
+        document.getElementById("teamName").value = ""; 
+    
+      
+    
+        updateDropdowns(); 
+    
+    } 
+
+
+    function updateDropdowns() {
+
+  
+
+        let t1 = document.getElementById("team1"); 
+
+        let t2 = document.getElementById("team2"); 
+
+ 
+
+        t1.innerHTML = ""; 
+
+        t2.innerHTML = ""; 
+
+ 
+
+        for (let t of teams) { 
+
+        t1.innerHTML += "<option>" + t + "</option>"; 
+
+        t2.innerHTML += "<option>" + t + "</option>"; 
+
+    } 
+    }
+
+    // -------------------- INIT STATS -------------------- 
+
+function initTeam(team) { 
+
+  
+
+ if (!stats[team]) { 
+
+ stats[team] = { 
+
+ played: 0, 
+
+ won: 0, 
+
+ lost: 0, 
+
+ points: 0 
+
+ }; 
+
+ } 
+
+} 
+
+  
+
+// -------------------- ADD MATCH -------------------- 
+
+function addMatch() { 
+
+  
+
+ let team1 = document.getElementById("team1").value; 
+
+ let team2 = document.getElementById("team2").value; 
+
+  
+
+ let score1 = Number(document.getElementById("score1").value); 
+
+ let score2 = Number(document.getElementById("score2").value); 
+
+  
+
+ if (team1 === team2) { 
+
+ alert("Teams must be different!"); 
+
+ return; 
+
+ } 
+
+  
+
+ initTeam(team1); 
+
+ initTeam(team2); 
+
+  
+
+ stats[team1].played++; 
+
+ stats[team2].played++; 
+
+  
+
+ let resultText = ""; 
+
+  
+
+ if (score1 > score2) { 
+
+ stats[team1].won++; 
+
+ stats[team1].points += 3; 
+
+ stats[team2].lost++; 
+
+  
+
+ resultText = team1 + " beat " + team2; 
+
+ } 
+
+ else if (score2 > score1) { 
+
+ stats[team2].won++; 
+
+ stats[team2].points += 3; 
+
+ stats[team1].lost++; 
+
+  
+
+ resultText = team2 + " beat " + team1; 
+
+ } 
+
+ else { 
+
+ stats[team1].points += 1; 
+
+ stats[team2].points += 1; 
+
+  
+
+ resultText = team1 + " drew with " + team2; 
+
+ } 
+
+  
+
+ document.getElementById("matches").innerHTML += 
+
+ "<div class='result'>" + 
+
+ team1 + " " + score1 + " - " + score2 + " " + team2 + 
+
+ " (" + resultText + ")" + 
+
+ "</div>"; 
+
+  
+
+ renderTable(); 
+
+} 
+
+  
+
+// -------------------- LEAGUE TABLE -------------------- 
+
+function renderTable() { 
+
+  
+
+ let output = ` 
+
+ <table> 
+
+ <tr> 
+
+ <th>Team</th> 
+
+ <th>P</th> 
+
+ <th>W</th> 
+
+ <th>L</th> 
+
+ <th>Pts</th> 
+
+ </tr> 
+
+ `; 
+
+  
+
+ for (let team in stats) { 
+
+  
+
+ output += ` 
+
+ <tr> 
+
+ <td>${team}</td> 
+
+ <td>${stats[team].played}</td> 
+
+ <td>${stats[team].won}</td> 
+
+ <td>${stats[team].lost}</td> 
+
+ <td>${stats[team].points}</td> 
+
+ </tr> 
+
+ `; 
+
+ } 
+
+  
+
+ output += "</table>"; 
+
+  
+
+ document.getElementById("table").innerHTML = output; 
+
+} 
+
+ 
+    
+</script> 
+
+  
+
+<body> 
+
+<header> 
+
+    <section>
+    
+        <h1>Rocket League Tournament!</h1>
+
+        <p> Will you win and become the best?</p> 
+
+    </section>
+    
+    <section>
+        
+        <img src="image.jpg">
+        
+        <h1>whats your team name</h1>
+        
+        <input id="teamName" placeholeder="Enter Team Name">
+       
+        <button onclick="addTeam()">Add team</button>
+        
+        <ul id="teamList"></ul>
+
+    </section>
+
+    <section>
+
+
+        <h1 style ="font-size: 15px;">Record match</h1>
+        <p> Will you win and become the best </p>
+        <select id="team1"></select> 
+        <input id="score1" type="number" value="0">
+
+        <p> VS </p>
+        
+        <select id="team2"></select> 
+        <input id="score2" type="number" value="0">
+
+
+        <button onclick="addMatch()">Confirm Result</button>
+
+
+
+    </section>
+
+    <section>
+        <h1 style ="font-size :15px;">Match History</h1>
+        <div id="matches"></div>
+    </section>
+    
+    <section>
+        <h1 style ="font-size :15px;">lauges</h1>
+        <div id="table"></div>
+    </section>
+    
+
+
+</header>
+
+<header>
+
+
+
+
+</header>
+
+  
+
+  
+
+</body> 
