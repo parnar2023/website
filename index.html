@@ -33,15 +33,15 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-        // 🔥 Replace this with YOUR Firebase config
         const firebaseConfig = {
-            apiKey: "YOUR_KEY",
-            authDomain: "YOUR_APP.firebaseapp.com",
-            databaseURL: "https://YOUR_APP-default-rtdb.firebaseio.com",
-            projectId: "YOUR_APP",
-            storageBucket: "YOUR_APP.appspot.com",
-            messagingSenderId: "000000000000",
-            appId: "1:000000000000:web:000000000000"
+            apiKey: "AIzaSyA0T3pnUvMgrNjmbYbTnetaxjtWCb55Y7Y",
+            authDomain: "website-f6d0f.firebaseapp.com",
+            databaseURL: "https://website-f6d0f-default-rtdb.firebaseio.com",
+            projectId: "website-f6d0f",
+            storageBucket: "website-f6d0f.firebasestorage.app",
+            messagingSenderId: "800099865387",
+            appId: "1:800099865387:web:8430a2c3bddb071d236b6e",
+            measurementId: "G-G8HTF5580X"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -79,7 +79,7 @@
             });
         }
 
-        /* ---------- ORIGINAL LOGIC (WITH SMALL TWEAKS FOR SYNC) ---------- */
+        /* ---------- ORIGINAL LOGIC ---------- */
 
         function renderTeamList() {
             const list = document.getElementById("teamList");
@@ -148,106 +148,4 @@
 
             if (score1 > score2) {
                 stats[team1].won++;
-                stats[team1].points += 3;
-                stats[team2].lost++;
-                resultText = team1 + " beat " + team2;
-            } else if (score2 > score1) {
-                stats[team2].won++;
-                stats[team2].points += 3;
-                stats[team1].lost++;
-                resultText = team2 + " beat " + team1;
-            } else {
-                stats[team1].points += 1;
-                stats[team2].points += 1;
-                resultText = team1 + " drew with " + team2;
-            }
-
-            document.getElementById("matches").innerHTML +=
-                "<div class='result'>" +
-                team1 + " " + score1 + " - " + score2 + " " + team2 +
-                " (" + resultText + ")" +
-                "</div>";
-
-            renderTable();
-            saveData();
-        };
-
-        function renderTable() {
-            let output = `
-                <table>
-                    <tr>
-                        <th>Team</th>
-                        <th>P</th>
-                        <th>W</th>
-                        <th>L</th>
-                        <th>Pts</th>
-                    </tr>
-            `;
-
-            for (let team in stats) {
-                output += `
-                    <tr>
-                        <td>${team}</td>
-                        <td>${stats[team].played}</td>
-                        <td>${stats[team].won}</td>
-                        <td>${stats[team].lost}</td>
-                        <td>${stats[team].points}</td>
-                    </tr>
-                `;
-            }
-
-            output += "</table>";
-
-            document.getElementById("table").innerHTML = output;
-        }
-
-        // Start listening for data as soon as the page loads
-        loadData();
-    </script>
-</head>
-
-<body>
-    <header>
-        <section>
-            <h1>Rocket League Tournament!</h1>
-            <p>Will you win and become the best?</p>
-        </section>
-
-        <section>
-            <img src="image.jpg">
-            <h1>whats your team name</h1>
-            <input id="teamName" placeholder="Enter Team Name">
-            <button onclick="addTeam()">Add team</button>
-            <ul id="teamList"></ul>
-        </section>
-
-        <section>
-            <h1 style="font-size: 15px;">Record match</h1>
-            <p>Will you win and become the best</p>
-
-            <select id="team1"></select>
-            <input id="score1" type="number" value="0">
-
-            <p>VS</p>
-
-            <select id="team2"></select>
-            <input id="score2" type="number" value="0">
-
-            <button onclick="addMatch()">Confirm Result</button>
-        </section>
-
-        <section>
-            <h1 style="font-size: 15px;">Match History</h1>
-            <div id="matches"></div>
-        </section>
-
-        <section>
-            <h1 style="font-size: 15px;">leagues</h1>
-            <div id="table"></div>
-        </section>
-    </header>
-
-    <header></header>
-</body>
-</html>
 
