@@ -206,6 +206,24 @@
         /* -------------------- START SYNC -------------------- */
         loadData();
 
+        window.resetTournament = function () {
+            teams = [];
+            stats = {};
+            document.getElementById("matches").innerHTML = "";
+            document.getElementById("teamList").innerHTML = "";
+            document.getElementById("table").innerHTML = "";
+            document.getElementById("team1").innerHTML = "";
+            document.getElementById("team2").innerHTML = "";
+
+            // Save empty data to Firebase
+        set(ref(db, "tournament"), {
+            teams: [],
+            stats: {},
+            matchesHTML: ""
+        });
+        };
+
+
     </script>
 </head>
 
@@ -244,11 +262,14 @@
     <section>
         <h1 style="font-size: 15px;">Match History</h1>
         <div id="matches"></div>
+        <button onclick="resetTournament()">Reset Tournament</button>
+
     </section>
 
     <section>
         <h1 style="font-size: 15px;">League Table</h1>
         <div id="table"></div>
+
     </section>
 
 </header>
